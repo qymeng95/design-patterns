@@ -8,35 +8,47 @@
  * Mail: qymeng@i9i8.com
  */
 
-namespace DesignPattern;
+namespace DesignPattern\Singleton;
 
 /**
  * Class Singleton
  * @package Tests\DesignPatterns
  */
-class Singleton
+class SingletonMulti
 {
-    private static ?Singleton $singleton = null;
+    private static int $max = 3;
 
-    protected static $id;
+    private static ?array $singletons = null;
 
-    final private function __construct()
+    protected ?int $id = null;
+
+    final private function __construct(int $id)
     {
-        self::$id = random_int(0, 100);
+        $this->id = $id;
     }
 
-    public static function getSingleton(): ?Singleton
+    private static function init(): void
     {
-        if (null === self::$singleton) {
-            self::$singleton = new static();
+        for ($i = 0; $i < self::$max; $i++) {
+            self::$singletons[$i] = new self($i);
         }
-
-        return self::$singleton;
     }
 
-    public static function say()
+    /**
+     * @param $i
+     * @return SingletonMulti
+     */
+    public static function getSingleton($i): SingletonMulti
     {
-        $res = "singleton " . self::$id;
+        if (empty(self::$singletons)) {
+            self::init();
+        }
+        return self::$singletons[$i];
+    }
+
+    public function say(): string
+    {
+        $res = "singleton " . $this->id;
 
         echo $res . "\n";
 
@@ -67,6 +79,5 @@ class Singleton
  */
 
 /**
- * 需要产生固定数量对象的模式就叫做有上限的多例模式，它是单例模式的一种扩展，采用有上限的多例模式，我们可以在设计时决定在内存中有多少个实例，方便系统进行扩展，修正单例可能存在的性能问题，提供系统的响应速度
+ * 这种需要产生固定数量对象的模式就叫做有上限的多例模式，它是单例模式的一种扩展，采用有上限的多例模式，我们可以在设计时决定在内存中有多少个实例，方便系统进行扩展，修正单例可能存在的性能问题，提供系统的响应速度
  */
-
