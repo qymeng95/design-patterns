@@ -7,15 +7,19 @@
  * Mail: qymeng@i9i8.com
  */
 
-namespace DesignPattern\Factory;
+namespace DesignPattern\AbstractFactory;
 
 abstract class AbstractHumanFactory
 {
     /**
-     * @param string $class
      * @return Human
      */
-    abstract public function createHuman(string $class);
+    abstract public function createBlackHuman();
+
+    /**
+     * @return Human
+     */
+    abstract public function createYellowHuman();
 }
 
 /**

@@ -9,8 +9,11 @@
 
 namespace DesignPattern;
 
+use DesignPattern\AbstractFactory\FemaleHumanFactory;
+use DesignPattern\AbstractFactory\MaleHumanFactory;
 use DesignPattern\Factory\BlackHuman;
 use DesignPattern\Factory\HumanFactory;
+use DesignPattern\Factory\SampleHumanFactory;
 use DesignPattern\Factory\StandardHumanFactory;
 use DesignPattern\Factory\YellowHuman;
 use DesignPattern\Singleton\Singleton;
@@ -41,7 +44,7 @@ class Test extends TestCase
         self::assertNotEquals($res1, $res2);
     }
 
-    public function testFactory()
+    public function testStandardFactory()
     {
         $standardHumanFactory = new StandardHumanFactory();
         $blackHuman = $standardHumanFactory->createHuman(BlackHuman::class);
@@ -53,5 +56,48 @@ class Test extends TestCase
         $yellowHuman->talk();
 
         self::assertNotEquals($color, $color2);
+    }
+
+    public function testSampleFactory()
+    {
+        $blackHuman = SampleHumanFactory::createHuman(BlackHuman::class);
+        $color = $blackHuman->getColor();
+        $blackHuman->talk();
+
+        $yellowHuman = SampleHumanFactory::createHuman(YellowHuman::class);
+        $color2 = $yellowHuman->getColor();
+        $yellowHuman->talk();
+
+        self::assertNotEquals($color, $color2);
+    }
+
+    public function testAbstractFactory()
+    {
+        $maleHumanFactory = new MaleHumanFactory();
+        $femaleHumanFactory = new FemaleHumanFactory();
+
+        $maleBlackHuman = $maleHumanFactory->createBlackHuman();
+        $feMaleBlackHuman = $femaleHumanFactory->createBlackHuman();
+        $maleBlackHuman->getColor();
+        $feMaleBlackHuman->getColor();
+
+        $maleBlackHuman->getSex();
+        $feMaleBlackHuman->getSex();
+
+        $maleBlackHuman->talk();
+        $feMaleBlackHuman->talk();
+
+        $maleYellowHuman = $maleHumanFactory->createYellowHuman();
+        $feMaleYellowHuman = $femaleHumanFactory->createYellowHuman();
+        $color = $maleYellowHuman->getColor();
+        $color2 = $feMaleYellowHuman->getColor();
+
+        $maleYellowHuman->getSex();
+        $feMaleYellowHuman->getSex();
+
+        $maleYellowHuman->talk();
+        $feMaleYellowHuman->talk();
+
+        self::assertEquals($color, $color2);
     }
 }

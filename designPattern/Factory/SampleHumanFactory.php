@@ -9,13 +9,20 @@
 
 namespace DesignPattern\Factory;
 
-abstract class AbstractHumanFactory
+class SampleHumanFactory
 {
     /**
      * @param string $class
      * @return Human
      */
-    abstract public function createHuman(string $class);
+    public static function createHuman(string $class)
+    {
+        if (!class_exists($class)) {
+            throw new \Exception('not support');
+        }
+
+        return new $class();
+    }
 }
 
 /**
@@ -30,15 +37,4 @@ abstract class AbstractHumanFactory
 首先，工厂方法模式是new一个对象的替代品，所以在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否要增加一个工厂类进行管理，增加代码的复杂度。
 其次，需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式
 再次，工厂方法模式可以用在异构项目中，例如通过WebService与一个非Java的项目交互，虽然WebService号称是可以做到异构系统的同构化，但是在实际的开发中，还是会碰到很多问题，如类型问题、WSDL文件的支持问题，等等。从WSDL中产生的对象都认为是一个产品，然后由一个具体的工厂类进行管理，减少与外围系统的耦合
- */
-
-/**
-缩小为简单工厂模式
-升级为多个工厂类
-替代单例模式
-延迟初始化 [通过定义一个Map容器，容纳所有产生的对象，如果在Map容器中已经有的对象，则直接取出返回；如果没有，则根据需要的类型产生一个对象并放入到Map容器中，以方便下次调用。]
- */
-
-/**
-工厂方法模式在项目中使用得非常频繁，以至于很多代码中都包含工厂方法模式。该模式几乎尽人皆知，但不是每个人都能用得好。熟能生巧，熟练掌握该模式，多思考工厂方法如何应用，而且工厂方法模式还可以与其他模式混合使用（例如模板方法模式、单例模式、原型模式等），变化出无穷的优秀设计。
  */
