@@ -19,7 +19,6 @@ use DesignPattern\Factory\YellowHuman;
 use DesignPattern\Singleton\Singleton;
 use DesignPattern\Singleton\SingletonMulti;
 use DesignPattern\TemplateMethod\HummerH1Model;
-use DesignPattern\TemplateMethod\BmwModel;
 use DesignPattern\TemplateMethod\HummerH2Model;
 use PHPUnit\Framework\TestCase;
 
