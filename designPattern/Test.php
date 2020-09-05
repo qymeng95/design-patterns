@@ -11,6 +11,7 @@ namespace DesignPattern;
 
 use DesignPattern\AbstractFactory\FemaleHumanFactory;
 use DesignPattern\AbstractFactory\MaleHumanFactory;
+use DesignPattern\Builder\Director;
 use DesignPattern\Factory\BlackHuman;
 use DesignPattern\Factory\SampleHumanFactory;
 use DesignPattern\Factory\StandardHumanFactory;
@@ -18,6 +19,7 @@ use DesignPattern\Factory\YellowHuman;
 use DesignPattern\Singleton\Singleton;
 use DesignPattern\Singleton\SingletonMulti;
 use DesignPattern\TemplateMethod\HummerH1Model;
+use DesignPattern\TemplateMethod\BmwModel;
 use DesignPattern\TemplateMethod\HummerH2Model;
 use PHPUnit\Framework\TestCase;
 
@@ -110,6 +112,17 @@ class Test extends TestCase
 
         $hummerH1Model->run();
         $hummerH2Model->run();
+
+        self::assertEquals(1, 1);
+    }
+
+    public function testBuilder()
+    {
+        $director = new Director();
+        $director->getABenzModel()->run();
+        $director->getBBenzModel()->run();
+        $director->getABmwModel()->run();
+        $director->getBBmwModel()->run();
 
         self::assertEquals(1, 1);
     }
